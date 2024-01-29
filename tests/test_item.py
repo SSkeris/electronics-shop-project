@@ -22,3 +22,9 @@ def test_Item_apply_discount():
     Item.pay_rate = 0.5
     tets_item.apply_discount()
     assert tets_item.price == 25000
+
+
+def test_name():
+    Item.instantiate_from_csv()
+    item1 = Item.all[0]
+    assert item1.name == 'Смартфон'
