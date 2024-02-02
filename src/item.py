@@ -20,6 +20,14 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
+    def __repr__(self):
+        """Возвращает: имя класса('имя экземпляра', цена экземпляра, количество экземпляра"""
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        """Возвращает: имя экземпляра"""
+        return f'{self.__name}'
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -67,5 +75,3 @@ class Item:
     def string_to_number(param: str) -> int:
         """Метод, возвращающий число из числа-строки"""
         return int(float(param))
-
-

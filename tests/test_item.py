@@ -28,3 +28,10 @@ def test_name():
     Item.instantiate_from_csv()
     item1 = Item.all[0]
     assert item1.name == 'Смартфон'
+
+def test__repr__str__():
+    item1 = Item("Смартфон", 10000, 20)
+    assert repr(item1) == "Item('Смартфон', 10000, 20)"
+    assert str(item1) == 'Смартфон'
+
+
