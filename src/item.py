@@ -28,6 +28,12 @@ class Item:
         """Возвращает: имя экземпляра"""
         return f'{self.__name}'
 
+    def __add__(self, other):
+        """Складывает кол-во товаров"""
+        if not isinstance(other, Item):
+            raise ValueError("Error: Сложить можно только товары")
+        return self.quantity + other.quantity
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
@@ -43,9 +49,7 @@ class Item:
 
     @property
     def name(self) -> str:
-        """
-        name геттер
-        """
+        """name геттер"""
         return self.__name
 
     @name.setter
