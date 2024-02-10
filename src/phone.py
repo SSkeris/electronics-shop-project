@@ -2,6 +2,7 @@ from src.item import Item
 
 
 class Phone(Item):
+    """Класс для представления товара в магазине, тип мобильный телефон"""
     def __init__(self, name: str, price: float, quantity: int, number_of_sim: int):
         super().__init__(name, price, quantity)
         self.__number_of_sim = number_of_sim
