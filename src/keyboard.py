@@ -23,7 +23,6 @@ class Keyboard(Item, MixinLenguage):
 
     def __init__(self, name, price, quantity):
         super().__init__(name, price, quantity)
-        self._language = "EN"
 
     # вариант без миксина
     # @property

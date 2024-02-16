@@ -2,6 +2,12 @@ import csv
 from pathlib import Path
 
 
+class InstantiateCSVError(Exception):
+    """Файл поврежден"""
+    def __init__(self, *args, **kwargs):
+        pass
+
+
 class Item:
     """Класс для представления товара в магазине."""
     pay_rate = 1.0
@@ -19,6 +25,7 @@ class Item:
         self.price = price
         self.quantity = quantity
         self.all.append(self)
+        super().__init__()
 
     def __repr__(self):
         """Возвращает: имя класса('имя экземпляра', цена экземпляра, количество экземпляра"""
@@ -64,18 +71,29 @@ class Item:
     def instantiate_from_csv(cls):
         """класс-метод, инициализирующий экземпляры класса
         `Item` данными из файла _../src/items.csv_"""
-        with cls.DATA_DIR.open(newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            cls.all.clear()
-            for row in reader:
-                # print(row['name'], row['price'], row['quantity'])
-                name = row['name']
-                price = row['price']
-                quantity = row['quantity']
-                cls(name, price, quantity)
-            return cls
+        try:
+            with cls.DATA_DIR.open(newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                cls.all.clear()
+                try:
+                    for row in reader:
+                        # print(row['name'], row['price'], row['quantity'])
+                        name = row['name']
+                        price = row['price']
+                        quantity = row['quantity']
+                        cls(name, price, quantity)
+                    return cls
 
-    @staticmethod
-    def string_to_number(param: str) -> int:
-        """Метод, возвращающий число из числа-строки"""
-        return int(float(param))
+                except KeyError:
+                    raise InstantiateCSVError("Файл item.csv поврежден")
+                # except KeyError:
+                #     print("Файл item.csv поврежден")
+
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
+
+
+@staticmethod
+def string_to_number(param: str) -> int:
+    """Метод, возвращающий число из числа-строки"""
+    return int(float(param))
